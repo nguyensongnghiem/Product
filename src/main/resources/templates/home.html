@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Product Manager</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<h1 class="h1">Danh sách sản phẩm</h1>
+<div>
+    <form action="/product/list">
+        <select class=" form-control" name="searchCategory">
+            <option th:selected="${searchCategory==''}"
+                    value=""
+            >Tất cả</option>
+            <option th:each="category:${categoryList}"
+                    th:value="${category.name}"
+                    th:text="${category.name}"
+                    th:selected="(${searchCategory} == ${category.name})">
+            </option>
+        </select>
+        <input class="form-control" name="searchName" placeholder="Nhập tên sản phẩm"
+               th:value="${searchName}">
+        <button class="btn btn-primary"><i class="fas fa-search me-1"></i>Tìm kiếm</button>
+
+    </form>
+</div>
+<div class="card mb-4">
+    <div class="card-header">
+        <i class="fas fa-table me-1"></i>
+        Danh sách sản phẩm
+    </div>
+
+    <div class="card-body">
+        <table id="routerDatatables" class="table table-bordered table-striped table-sm">
+            <thead >
+            <tr>
+                <th class="text-center" >STT</th>
+                <th class="text-center" >Tên sản phầm</th>
+                <th class="text-center" >Danh mục</th>
+                <th class="text-center" >Màu sắc</th>
+                <th class="text-center" >Số lượng</th>
+                <th class="text-center" >Giá tiền</th>
+                <th class="text-center" >Mô tả</th>
+
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="product,stats:${productList}">
+                <td  class="text-center" th:text="${stats.count}">
+                <td  class="text-center" th:text="${product.getCategory().name}">
+                <td  class="text-center" th:text="${product.color}">
+                <td  class="text-center" th:text="${product.quantity}">
+                <td  class="text-center" th:text="${product.price}">
+                <td  class="text-center" th:text="${product.description}">
+
+                <td class="text-center" >
+                    <div class="btn-group btn-group-sm" role="group" aria-label="Basic mixed styles example">
+                        <a th:href="@{'/product/edit/'+${product.id}}" type="button" class="btn btn-warning">Sửa</a>
+                        <button th:data-id="${product.getId()}" th:data-product-name="${product.getName()}"
+                                th:onclick="deleteProduct(this.getAttribute('data-id'),this.getAttribute('data-product-name'))"
+                                type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                data-bs-target="#deleteModal">Xóa
+                        </button>
+                    </div>
+                </td>
+            </tr></tbody>
+        </table>
+    </div>
+</div>
+<!-- MODAL TÁC VỤ XÓA-->
+<<!-- Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form th:action="@{/product/delete}" method="post">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="deleteModalLabel">Xác nhận xóa dữ liệu !</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-body">
+                        Bạn có muốn thực hiện xóa sản phẩm <span style="color: red" id="delete-name"></span> ?
+                    </div>
+                    <input name="deleteId" type="hidden" id="hidden-delete-id">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <button type="submit" class="btn btn-danger">Xóa dữ liệu</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script th:inline="javascript">
+</script>
+
+<script>
+    function deleteProduct(id, name) {
+        document.getElementById("delete-name").innerHTML = name;
+        document.getElementById("hidden-delete-id").value = id;
+    }
+</script>
+</body>
+</html>
