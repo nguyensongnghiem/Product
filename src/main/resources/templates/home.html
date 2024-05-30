@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Product Manager</title>
@@ -16,27 +16,25 @@
         Tìm kiếm
     </div>
     <div class="card-body">
-    <form action="/product/list">
-        <select class=" form-control mb-4" name="searchCategory">
-            <option th:selected="${searchCategory==''}"
-                    value=""
-            >Tất cả</option>
-            <option th:each="category:${categoryList}"
-                    th:value="${category.name}"
-                    th:text="${category.name}"
-                    th:selected="(${searchCategory} == ${category.name})">
-            </option>
-        </select>
-        <input class="form-control mb-4" name="searchName" placeholder="Nhập tên sản phẩm"
-               th:value="${searchName}">
-        <button class="btn btn-primary"><i class="fas fa-search me-1"></i>Tìm kiếm</button>
-    </form>
+        <form action="/product/list">
+            <select class=" form-control mb-4" name="searchCategory">
+                <option th:selected="${searchCategory==''}"
+                        value=""
+                >Tất cả
+                </option>
+                <option th:each="category:${categoryList}"
+                        th:value="${category.name}"
+                        th:text="${category.name}"
+                        th:selected="(${searchCategory} == ${category.name})">
+                </option>
+            </select>
+            <input class="form-control mb-4" name="searchName" placeholder="Nhập tên sản phẩm"
+                   th:value="${searchName}">
+            <button class="btn btn-primary"><i class="fas fa-search me-1"></i>Tìm kiếm</button>
+        </form>
     </div>
 </div>
-<div class="container">
 
-<a th:href="@{/product/create}" class="btn btn-info">Thêm mới sản phầm</a>
-</div>
 <div class="card mb-4">
     <div class="card-header">
         <i class="fas fa-table me-1"></i>
@@ -44,33 +42,34 @@
     </div>
 
     <div class="card-body">
+        <div class="mb-4">
+            <a th:href="@{/product/create}" class="btn btn-info">Thêm mới sản phẩm</a>
+        </div>
         <table id="routerDatatables" class="table table-bordered table-striped table-sm">
-            <thead >
+            <thead>
             <tr>
-                <th class="text-center" >STT</th>
-                <th class="text-center" >Tên sản phầm</th>
-                <th class="text-center" >Danh mục</th>
-                <th class="text-center" >Màu sắc</th>
-                <th class="text-center" >Số lượng</th>
-                <th class="text-center" >Giá tiền</th>
-                <th class="text-center" >Mô tả</th>
-                <th class="text-center" >Tác vụ</th>
-
-
+                <th class="text-center">STT</th>
+                <th class="text-center">Tên sản phầm</th>
+                <th class="text-center">Danh mục</th>
+                <th class="text-center">Màu sắc</th>
+                <th class="text-center">Số lượng</th>
+                <th class="text-center">Giá tiền</th>
+                <th class="text-center">Mô tả</th>
+                <th class="text-center">Tác vụ</th>
             </tr>
             </thead>
 
             <tbody>
             <tr th:each="product,stats:${page.getContent()}">
-                <td  class="text-center" th:text="${stats.count+page.getSize()*page.getNumber()}">
-                <td  class="text-center" th:text="${product.name}">
-                <td  class="text-center" th:text="${product.getCategory().name}">
-                <td  class="text-center" th:text="${product.color}">
-                <td  class="text-center" th:text="${product.quantity}">
-                <td  class="text-center" th:text="${product.price}">
-                <td  class="text-center" th:text="${product.description}">
+                <td class="text-center" th:text="${stats.count+page.getSize()*page.getNumber()}">
+                <td class="text-center" th:text="${product.name}">
+                <td class="text-center" th:text="${product.getCategory().name}">
+                <td class="text-center" th:text="${product.color}">
+                <td class="text-center" th:text="${product.quantity}">
+                <td class="text-center" th:text="${product.price}">
+                <td class="text-center" th:text="${product.description}">
 
-                <td class="text-center" >
+                <td class="text-center">
                     <div class="btn-group btn-group-sm" role="group" aria-label="Basic mixed styles example">
                         <a th:href="@{'/product/edit/'+${product.id}}" type="button" class="btn btn-warning">Sửa</a>
                         <button th:data-id="${product.getId()}" th:data-product-name="${product.getName()}"
@@ -80,33 +79,38 @@
                         </button>
                     </div>
                 </td>
-            </tr></tbody>
+            </tr>
+            </tbody>
         </table>
         <nav aria-label="...">
             <ul class="pagination">
                 <li class="page-item" th:classappend="${!page.hasPrevious()} ? disabled">
-                    <a class="page-link" th:href="@{/product/list(pageNumber=0,searchName=${searchName},searchCategory=${searchCategory})}" aria-label="Previous">
+                    <a class="page-link"
+                       th:href="@{/product/list(pageNumber=0,searchName=${searchName},searchCategory=${searchCategory})}">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
                 <li class="page-item" th:classappend="${!page.hasPrevious()} ? disabled">
-                    <a class="page-link" th:href="@{/product/list(pageNumber=${page.getNumber()-1},searchName=${searchName},searchCategory=${searchCategory})}">Previous</a>
+                    <a class="page-link"
+                       th:href="@{/product/list(pageNumber=${page.getNumber()-1},searchName=${searchName},searchCategory=${searchCategory})}">Previous</a>
                 </li>
 
                 <li th:each="p:${#numbers.sequence(page.getNumber()-3,page.getNumber()+3)}"
                     th:if="${p>=0&&p<page.getTotalPages()}"
                     th:classappend="${p==page.getNumber()} ? active"
                     class="page-item">
-                    <a class="page-link" th:href="@{/product/list(pageNumber=${p},searchName=${searchName},searchCategory=${searchCategory})}" th:text="${p+1}"></a>
+                    <a class="page-link"
+                       th:href="@{/product/list(pageNumber=${p},searchName=${searchName},searchCategory=${searchCategory})}"
+                       th:text="${p+1}"></a>
                 </li>
 
-                <li class="page-item" th:if="${page.hasNext()}">
+                <li class="page-item" th:classappend="${!page.hasNext()} ? disabled">
                     <a class="page-link"
                        th:href="@{/product/list(pageNumber=${page.getNumber()+1},searchName=${searchName},searchCategory=${searchCategory})}">Next</a>
                 </li>
                 <li class="page-item" th:classappend="${!page.hasNext()} ? disabled">
-                    <a class="page-link" th:href="@{/product/list(pageNumber=${page.getTotalPages()-1},searchName=${searchName},searchCategory=${searchCategory})}"
-                       aria-label="Previous">
+                    <a class="page-link"
+                       th:href="@{/product/list(pageNumber=${page.getTotalPages()-1},searchName=${searchName},searchCategory=${searchCategory})}">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>

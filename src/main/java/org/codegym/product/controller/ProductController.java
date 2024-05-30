@@ -49,9 +49,20 @@ public class ProductController {
         productService.save(product);
         return "redirect:/product/list";
     }
-    @GetMapping("/delete/{id}")
-    public String edit(@PathVariable Integer id) {
-        return "home";
+    @GetMapping("/edit/{id}")
+    public String showEditForm(Model model, @PathVariable(name = "id") Integer id) {
+        Product product = productService.findById(id).get();
+        model.addAttribute("product", product);
+        model.addAttribute("categoryList", categoryService.findAll());
+        return "/edit";
+    }
+    @PostMapping("/edit")
+    public String edit(@ModelAttribute Product product, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()){
+            return "/edit";
+        }
+        productService.save(product);
+        return "redirect:/product/list";
     }
 
 }

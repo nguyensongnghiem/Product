@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Thêm mới sản phẩm</title>
@@ -72,6 +72,10 @@
 
                                     </select>
                                 </div>
+                            </div>
+                            <div class="mb-3 col">
+                                <label class="form-label fw-bold">Mô tả</label>
+                                <input type="text" class="form-control" th:field="*{description}">
                             </div>
 
                         </div>

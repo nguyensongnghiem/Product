@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Sửa thông tin sản phẩm</title>
@@ -17,17 +17,20 @@
             <div class="card mb-4">
                 <div class="card-header">
                     <i class="fas fa-edit me-1"></i>
-                    Thêm mới thiết bị
+                    Sửa thông tin thiết bị
                 </div>
                 <div class="card-body">
-                    <form th:action="@{/product/create}" method="post" th:object="${product}">
+                    <form th:action="@{/product/edit}" method="post" th:object="${product}">
                         <div class="row g3">
+<!--                           ID ẩn -->
+                            <input type="text" hidden="hidden"  th:field="*{id}" th:value="${product.id}">
                             <div class="mb-3 col">
                                 <label class="form-label fw-bold">Tên sản phẩm</label>
                                 <input type="text" class="form-control"
                                        th:field="*{name}"
                                        th:required="required"
                                        th:classappend="${#fields.hasErrors('name')}?'is-invalid'"
+
                                 >
                                 <small class="invalid-feedback fw-bold text-end"
                                        th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
@@ -69,14 +72,17 @@
                                             aria-hidden="true" th:field="*{category}">
                                         <option th:each="category:${categoryList}" th:value="${category.id}"
                                                 th:text="${category.name}"></option>
-
                                     </select>
                                 </div>
+                            </div>
+                            <div class="mb-3 col">
+                                <label class="form-label fw-bold">Mô tả</label>
+                                <input type="text" class="form-control" th:field="*{description}" th:value="*{description}">
                             </div>
 
                         </div>
 
-                        <button class="btn btn-primary mt-3">Thêm mới</button>
+                        <button class="btn btn-primary mt-3">Cập nhật</button>
                     </form>
                 </div>
             </div>
