@@ -13,4 +13,6 @@ public interface IProductService {
     public Optional<Product> findById(Integer id);
     public Page<Product> searchByNameAndCategory(String name, String category, Pageable pageable);
     public void deleteById(Integer id);
+
+    void save(Product product);
 }

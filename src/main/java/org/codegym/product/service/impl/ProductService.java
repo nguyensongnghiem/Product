@@ -1,6 +1,5 @@
 package org.codegym.product.service.impl;
 
-import org.codegym.product.model.Category;
 import org.codegym.product.model.Product;
 import org.codegym.product.repository.IProductRepository;
 import org.codegym.product.service.IProductService;
@@ -28,11 +27,16 @@ public class ProductService implements IProductService {
 
     @Override
     public Page<Product> searchByNameAndCategory(String name, String category, Pageable pageable) {
-        return productRepository.findProductsByNameContainingIgnoreCaseAndCategory_NameContainingIgnoreCase(name, category, pageable);
+        return productRepository.findByNameContainingIgnoreCaseAndCategory_NameContainingIgnoreCase(name, category, pageable);
     }
 
     @Override
     public void deleteById(Integer id) {
         productRepository.deleteById(id);
+    }
+
+    @Override
+    public void save(Product product) {
+        productRepository.save(product);
     }
 }
