@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Entity
 @Getter
 @Setter
@@ -19,6 +21,7 @@ public class Product {
     private float price;
     private int quantity;
     private String color;
+    private LocalDate manufactureDate;
     private String description;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "categoryId")

@@ -11,22 +11,19 @@
 </head>
 <body>
 <div class="card">
-
         <div class="container-fluid px-4">
-
             <div class="card mb-4">
                 <div class="card-header">
                     <i class="fas fa-edit me-1"></i>
                     Thêm mới thiết bị
                 </div>
                 <div class="card-body">
-                    <form th:action="@{/product/create}" method="post" th:object="${product}">
+                    <form th:action="@{/product/create}" method="post" th:object="${productDTO}">
                         <div class="row g3">
                             <div class="mb-3 col">
                                 <label class="form-label fw-bold">Tên sản phẩm</label>
                                 <input type="text" class="form-control"
                                        th:field="*{name}"
-                                       th:required="required"
                                        th:classappend="${#fields.hasErrors('name')}?'is-invalid'"
                                 >
                                 <small class="invalid-feedback fw-bold text-end"
@@ -36,30 +33,36 @@
                                 <label class="form-label fw-bold">Màu sắc</label>
                                 <input type="text" class="form-control"
                                        th:field="*{color}"
-                                       th:required="required"
+
                                        th:classappend="${#fields.hasErrors('color')}?'is-invalid'">
                                 <small class="invalid-feedback fw-bold text-end"
                                        th:if="${#fields.hasErrors('color')}" th:errors="*{color}"></small>
                             </div>
                             <div class="mb-3 col">
                                 <label class="form-label fw-bold">Đơn giá</label>
-                                <input type="number" class="form-control"
+                                <input type="number" step="any" class="form-control"
                                        th:field="*{price}"
-                                       th:required="required"
+
                                        th:classappend="${#fields.hasErrors('price')}?'is-invalid'">
                                 <small class="invalid-feedback fw-bold text-end"
                                        th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></small>
                             </div>
                             <div class="mb-3 col">
                                 <label class="form-label fw-bold">Số lượng</label>
-                                <input type="number" class="form-control"
+                                <input type="number" step="any" class="form-control"
                                        th:field="*{quantity}"
-                                       th:required="required"
                                        th:classappend="${#fields.hasErrors('quantity')}?'is-invalid'">
                                 <small class="invalid-feedback fw-bold text-end"
                                        th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}"></small>
                             </div>
-
+                            <div class="mb-3 col">
+                                <label for="manufactureDate" class="form-label fw-bold">Ngày sản xuất</label>
+                                <input id="manufactureDate" type="date" class="form-control"
+                                       th:field="*{manufactureDate}"
+                                       th:classappend="${#fields.hasErrors('manufactureDate')}?'is-invalid'">
+                                <small class="invalid-feedback fw-bold text-end"
+                                       th:if="${#fields.hasErrors('manufactureDate')}" th:errors="*{manufactureDate}"></small>
+                            </div>
                         </div>
                         <div class=" row g3">
                             <div class="col-lg-6">
@@ -77,9 +80,7 @@
                                 <label class="form-label fw-bold">Mô tả</label>
                                 <input type="text" class="form-control" th:field="*{description}">
                             </div>
-
                         </div>
-
                         <button class="btn btn-primary mt-3">Thêm mới</button>
                     </form>
                 </div>

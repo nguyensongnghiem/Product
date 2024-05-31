@@ -20,10 +20,10 @@
                     Sửa thông tin thiết bị
                 </div>
                 <div class="card-body">
-                    <form th:action="@{/product/edit}" method="post" th:object="${product}">
+                    <form th:action="@{/product/edit}" method="post" th:object="${productDTO}">
                         <div class="row g3">
 <!--                           ID ẩn -->
-                            <input type="text" hidden="hidden"  th:field="*{id}" th:value="${product.id}">
+                            <input type="text" hidden="hidden"  th:field="*{id}" th:value="${id}">
                             <div class="mb-3 col">
                                 <label class="form-label fw-bold">Tên sản phẩm</label>
                                 <input type="text" class="form-control"
@@ -46,7 +46,7 @@
                             </div>
                             <div class="mb-3 col">
                                 <label class="form-label fw-bold">Đơn giá</label>
-                                <input type="number" class="form-control"
+                                <input type="number" step="any" class="form-control"
                                        th:field="*{price}"
                                        th:required="required"
                                        th:classappend="${#fields.hasErrors('price')}?'is-invalid'">
@@ -61,6 +61,15 @@
                                        th:classappend="${#fields.hasErrors('quantity')}?'is-invalid'">
                                 <small class="invalid-feedback fw-bold text-end"
                                        th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}"></small>
+                            </div>
+                            <div class="mb-3 col">
+                                <label class="form-label fw-bold">Ngày sản xuất</label>
+                                <input type="date" class="form-control"
+                                       th:field="*{manufactureDate}"
+
+                                       th:classappend="${#fields.hasErrors('manufactureDate')}?'is-invalid'">
+                                <small class="invalid-feedback fw-bold text-end"
+                                       th:if="${#fields.hasErrors('manufactureDate')}" th:errors="*{manufactureDate}"></small>
                             </div>
 
                         </div>
