@@ -15,8 +15,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class Product {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private String id;
     private String name;
     private float price;
     private int quantity;

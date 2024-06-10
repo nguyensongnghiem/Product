@@ -10,9 +10,9 @@ import java.util.Optional;
 
 public interface IProductService {
     public List<Product> findALl();
-    public Optional<Product> findById(Integer id);
+    public Optional<Product> findById(String id);
     public Page<Product> searchByNameAndCategory(String name, String category, Pageable pageable);
-    public void deleteById(Integer id);
+    public void deleteById(String id);
 
     void save(Product product);
 }

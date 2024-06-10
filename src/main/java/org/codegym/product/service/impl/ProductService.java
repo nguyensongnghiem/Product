@@ -21,7 +21,7 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public Optional<Product> findById(Integer id) {
+    public Optional<Product> findById(String id) {
         return productRepository.findById(id);
     }
 
@@ -31,7 +31,7 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public void deleteById(Integer id) {
+    public void deleteById(String id) {
         productRepository.deleteById(id);
     }
 
