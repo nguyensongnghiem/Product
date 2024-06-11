@@ -81,11 +81,16 @@ public class ProductController {
     }
 
     @PostMapping("/edit")
-    public String edit(@ModelAttribute Product product, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String edit(@Valid @ModelAttribute ProductDTO productDTO, BindingResult bindingResult, RedirectAttributes redirectAttributes,Model model) {
+        Product targetProduct = new Product();
+        productValidator.validate(productDTO,bindingResult);
         if (bindingResult.hasErrors()) {
+//            model.addAttribute("productDTO", productDTO);
+            model.addAttribute("categoryList", categoryService.findAll());
             return "/edit";
         }
-        productService.save(product);
+        BeanUtils.copyProperties(productDTO,targetProduct);
+        productService.save(targetProduct);
         redirectAttributes.addFlashAttribute("message", "Update thành công");
         return "redirect:/product/list";
     }

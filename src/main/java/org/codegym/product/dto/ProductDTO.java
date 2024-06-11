@@ -23,8 +23,8 @@ public class ProductDTO  {
 //    @NotEmpty(message = "Không được để trống")
     private String name;
     @NotNull(message = "Không được null")
-    @DecimalMin(value = "0.0",message = "Lớn hơn 0")
-    @DecimalMax(value = "100",message = "Nhỏ hơn 100")
+    @DecimalMin(value = "1",message = "Lớn hơn hoặc bằng 1")
+    @DecimalMax(value = "10000",message = "Nhỏ hơn 10000")
     private float price;
     @NotNull(message = "Không được null")
     @Min(value = 1,message = "Lớn hơn hoặc bằng 1")
